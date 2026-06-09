@@ -9,6 +9,8 @@
 // It renders TWO banners so the page feels genuinely cluttered:
 //   1. a scrolling marquee strip across the top of the content
 //   2. a floating, blinking ad card pinned to the bottom-right corner
+"use client";
+import { useState,useEffect } from "react";
 
 const MARQUEE_ADS = [
   "🔥 MEGA DEAL: buy 1 cable, get 0 free!",
@@ -19,6 +21,20 @@ const MARQUEE_ADS = [
 ];
 
 export default function AdBanner() {
+  const [isPremium, setIsPremium] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const premium = localStorage.getItem("premium");
+    if(premium === "true") {
+      setIsPremium(true);
+    }
+    setMounted(true);
+  }, []);
+
+  if (!mounted || isPremium) {
+    return null;
+  }
   return (
     <>
       {/* 1) Top marquee strip */}
