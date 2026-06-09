@@ -10,7 +10,7 @@ export default function PremiumPage() {
   const [email, setEmail] = useState("");
   const [paymentCompleted, setPaymentCompleted] = useState(false);
 
-  useEffect (() => {
+  useEffect(() => {
     const premium = localStorage.getItem("premium");
     if (premium === "true") {
       setPaymentCompleted(true);
@@ -26,6 +26,7 @@ export default function PremiumPage() {
       email,
     });
     localStorage.setItem("premium", "true");
+    window.dispatchEvent(new Event("premium-changed"));
     setPaymentCompleted(true);
   }
   if (paymentCompleted) {
